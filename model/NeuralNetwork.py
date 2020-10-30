@@ -55,7 +55,7 @@ class NeuralNetwork(nn.Module):
                 self.optimizer.step()
 
                 corrects = (torch.max(logit, 1)[1].view(batch_y.size()).data == batch_y.data).sum()
-                accuracy = 100*corrects/len(batch_y)
+                accuracy = torch.true_divide(100*corrects,len(batch_y))
 
                 print('Batch[{}] - loss: {:.6f}  acc: {:.4f}%({}/{})'.format(i, loss.item(), accuracy, corrects, batch_y.size(0)))
                 if i > 0 and i % 100 == 0:
