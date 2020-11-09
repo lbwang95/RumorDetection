@@ -12,7 +12,7 @@ class SpecialSpmmFunction(torch.autograd.Function):
     @staticmethod
     def forward(ctx, indices, values, shape, b):
         assert indices.requires_grad == False
-        a = torch.sparse_coo_tensor(indices, values, shape)
+        a = torch.sparse_coo_tensor(indices, values, shape, device="cuda:0")
         ctx.save_for_backward(a, b)
         ctx.N = shape[0]
         return torch.matmul(a, b)
