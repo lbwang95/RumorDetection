@@ -29,12 +29,12 @@ class DrGAT(nn.Module):
         X = self.user_tweet_embedding(torch.arange(0, self.uV).long().cuda())
         X = self.dropout(X)
 		
-		X = self.se1(X)
+	X = self.se1(X)
 
         X = F.elu(self.conv1(X, self.adj))
         X = self.dropout(X)
 		
-		X = self.se2(X)
+	X = self.se2(X)
 
         X = F.elu(self.conv2(X, self.adj))
         X_ = X[X_tid]

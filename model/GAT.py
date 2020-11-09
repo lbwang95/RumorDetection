@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.nn.init as init
-
+from model.se_layer import SELayer
 
 class SpecialSpmmFunction(torch.autograd.Function):
     """
@@ -109,6 +109,10 @@ class GAT(nn.Module):
         self.adj = adj
         self.user_tweet_embedding = nn.Embedding(self.uV, 300, padding_idx=0)
         init.xavier_uniform_(self.user_tweet_embedding.weight)
+        self.se1 = SELayer(nfeat, se_channels=int(np.sqrt(nfeat)))
+        self.se2 = SELayer(
+            hidden * nb_heads, se_channels=int(np.sqrt(hidden * nb_heads))
+        )
 
         self.attentions = nn.ModuleList([SpGraphAttentionLayer(in_features = nfeat,
                                                         out_features= hidden,
@@ -125,9 +129,11 @@ class GAT(nn.Module):
     def forward(self, X_tid):
         X = self.user_tweet_embedding(torch.arange(0, self.uV).long().cuda())
         X = self.dropout(X)
+        X = self.se1(X)
 
         X = torch.cat([att(X, self.adj) for att in self.attentions], dim=1)
         X = self.dropout(X)
+        X = self.se2(X)
 
         X = F.elu(self.out_att(X, self.adj))
         X_ = X[X_tid]

@@ -1,3 +1,6 @@
+import torch
+import torch.nn as nn
+
 class SELayer(nn.Module):
     """Squeeze-and-excitation networks"""
 
