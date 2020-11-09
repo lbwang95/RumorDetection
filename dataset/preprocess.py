@@ -244,9 +244,10 @@ def w2v_feature_extract(root_path, filename, w2v_path):
 
 
 if __name__ == "__main__":
-    w2v_feature_extract('./twitter15/', "twitter15", "twitter_w2v.bin")
-    w2v_feature_extract('./twitter16/', "twitter16", "twitter_w2v.bin")
-    w2v_feature_extract('./weibo/', "weibo", "weibo_w2v.bin")
+    #w2v_feature_extract('./twitter15/', "twitter15", "twitter_w2v.bin")
+    #w2v_feature_extract('./twitter16/', "twitter16", "twitter_w2v.bin")
+    #w2v_feature_extract('./weibo/', "weibo", "weibo_w2v.bin")
+    w2v_feature_extract('./weibo17/', "weibo17", "weibo_w2v.bin")
 
 
 
