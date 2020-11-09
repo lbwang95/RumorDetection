@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.init as init
-from model.GAT import GAT
+from model.DrGAT import DrGAT
 from model.TransformerBlock import TransformerBlock
 from .NeuralNetwork import NeuralNetwork
 
@@ -20,7 +20,7 @@ class GLAN(NeuralNetwork):
         self.mh_attention = TransformerBlock(input_size=300)
         self.word_embedding = nn.Embedding(V, D, padding_idx=0, _weight=torch.from_numpy(embedding_weights))
 
-        self.relation_embedding = GAT(nfeat=300, uV=self.uV, adj=adj)
+        self.relation_embedding = DrGAT(nfeat=300, uV=self.uV, adj=adj)
 
         self.convs = nn.ModuleList([nn.Conv1d(300, 100, kernel_size=K) for K in config['kernel_sizes']])
         self.max_poolings = nn.ModuleList([nn.MaxPool1d(kernel_size=maxlen - K + 1) for K in config['kernel_sizes']])
