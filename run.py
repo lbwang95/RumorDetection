@@ -49,12 +49,12 @@ config = {
 
 
 if __name__ == '__main__':
-    task = 'twitter15'
+    task = 'twitter17'
     # task = 'twitter16'
     # task = 'weibo'
     print("task: ", task)
 
-    if task == 'weibo':
+    if task == 'weibo17':
         config['num_classes'] = 2
         config['target_names'] = ['NR', 'FR']
 
