@@ -1,11 +1,16 @@
 #encoding='utf-8'
+import random
 with open("weibo.txt","r",encoding='utf-8') as f:
-    a=0
+    fi=[]
     for line in f:
+        fi.append(line)
+    random.shuffle(fi)
+    a=0
+    for line in fi:
         if a<=330*7:
             w1=open("weibo17.train","a",encoding='utf-8')
             w1.write(line)
-        elif a<=330*9:
+        elif a<=330*8:
             w2=open("weibo17.dev","a",encoding='utf-8')
             w2.write(line)
         else:
