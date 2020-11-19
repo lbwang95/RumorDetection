@@ -130,11 +130,11 @@ class GAT(nn.Module):
     def forward(self, X_tid):
         X = self.user_tweet_embedding(torch.arange(0, self.uV).long().cuda())
         X = self.dropout(X)
-        X = self.se1(X)
+        #X = self.se1(X)
 
         X = torch.cat([att(X, self.adj) for att in self.attentions], dim=1)
         X = self.dropout(X)
-        X = self.se2(X)
+        #X = self.se2(X)
 
         X = F.elu(self.out_att(X, self.adj))
         X_ = X[X_tid]
