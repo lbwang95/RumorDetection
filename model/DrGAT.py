@@ -104,7 +104,7 @@ class DrGAT(nn.Module):
 
     def __init__(self, nfeat, uV, adj, hidden=16, nb_heads=8, n_output=300, dropout=0.5, alpha=0.3):
         """Sparse version of GAT."""
-        super(GAT, self).__init__()
+        super(DrGAT, self).__init__()
         self.dropout = nn.Dropout(dropout)
         self.uV = uV
         self.adj = adj
