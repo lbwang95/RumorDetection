@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch.nn.init as init
 from model.GAT import GAT
 from model.DrGAT import DrGAT
+from model.se_layer import SELayer
 from model.TransformerBlock import TransformerBlock
 from .NeuralNetwork import NeuralNetwork
 
@@ -32,6 +33,8 @@ class GLAN(NeuralNetwork):
         self.fc1 = nn.Linear(600, 300)
         self.fc2 = nn.Linear(300, config['num_classes'])
 
+        #self.ses = nn.ModuleList([SELayer(100, 10),SELayer(100, 10),SELayer(100, 10)])
+
         self.init_weight()
         print(self)
 
@@ -52,6 +55,7 @@ class GLAN(NeuralNetwork):
             act = self.relu(Conv(X_text))
             pool = max_pooling(act)
             pool = torch.squeeze(pool)
+            #pool = se(pool)
             conv_block.append(pool)
         conv_feature = torch.cat(conv_block, dim=1)
         features = self.dropout(conv_feature)
