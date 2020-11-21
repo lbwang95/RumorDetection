@@ -172,7 +172,7 @@ class GraphConvolution(nn.Module):
         adj = torch.sparse_coo_tensor(
             edge_index,
             edge_attr,
-            (input.shape[0], input.shape[0]),dtype=torch.float
+            (input.shape[0], input.shape[0]),dtype=torch.float,device="cuda:0"
         ).to(input.device)
         support = torch.mm(input, self.weight)
         # print('adj,',adj.dtype)
