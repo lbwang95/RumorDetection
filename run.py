@@ -3,6 +3,7 @@ import pickle
 import torch
 from sklearn.metrics import classification_report
 from model.GLAN import GLAN
+import sys
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
@@ -17,7 +18,7 @@ def load_dataset(task):
            X_test_tid, X_test, y_test, adj
 
 
-def train_and_test(model, task):
+def train_and_test(model, task, gModule):
     model_suffix = model.__name__.lower().strip("text")
     config['save_path'] = 'checkpoint/weights.best.' + task + "." + model_suffix
 
@@ -25,7 +26,7 @@ def train_and_test(model, task):
     X_dev_tid, X_dev, y_dev, \
     X_test_tid, X_test, y_test, adj = load_dataset(task)
 
-    nn = model(config, adj)
+    nn = model(config, adj, gModule)
     nn.fit(X_train_tid, X_train, y_train,
            X_dev_tid, X_dev, y_dev)
 
@@ -53,11 +54,16 @@ if __name__ == '__main__':
     # task = 'twitter16'
     # task = 'weibo'
     print("task: ", task)
+    print(sys.argv[1:])
+    config['nb_filters']=int(sys.argv[2])
+    config['kernel_sizes']=[int(sys.argv[3]),int(sys.argv[3])+1,int(sys.argv[3])+2]
+    config['maxlen']=int(sys.argv[4])
+    print(config)
 
     if task == 'weibo17' or task == 'weibo':
         config['num_classes'] = 2
         config['target_names'] = ['NR', 'FR']
 
     model = GLAN
-    train_and_test(model, task)
+    train_and_test(model, task, sys.argv[1])
 
