@@ -49,7 +49,7 @@ config = {
 
 
 if __name__ == '__main__':
-    task = 'weibo17'
+    task = 'twitter15'
     # task = 'twitter16'
     # task = 'weibo'
     print("task: ", task)
