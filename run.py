@@ -18,7 +18,7 @@ def load_dataset(task):
            X_test_tid, X_test, y_test, adj
 
 
-def train_and_test(model, task, gModule):
+def train_and_test(model, task, gModule, params):
     model_suffix = model.__name__.lower().strip("text")
     config['save_path'] = 'checkpoint/weights.best.' + task + "." + model_suffix
 
@@ -30,10 +30,16 @@ def train_and_test(model, task, gModule):
     nn.fit(X_train_tid, X_train, y_train,
            X_dev_tid, X_dev, y_dev)
 
+    tmp=sys.stdout
+    w=open("Fresults.txt","a")
+    sys.stdout=w
+    print(gModule,params)
     print("================================")
     nn.load_state_dict(torch.load(config['save_path']))
     y_pred = nn.predict(X_test_tid, X_test)
     print(classification_report(y_test, y_pred, target_names=config['target_names'], digits=3))
+    sys.stdout=tmp
+    w.close()
 
 
 config = {
@@ -65,5 +71,5 @@ if __name__ == '__main__':
         config['target_names'] = ['NR', 'FR']
 
     model = GLAN
-    train_and_test(model, task, sys.argv[1])
+    train_and_test(model, task, sys.argv[1],sys.argv[1:])
 
