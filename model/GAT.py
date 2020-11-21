@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.nn.init as init
 import math
+import numpy as np
 from model.se_layer import SELayer
 
 from typing import Optional, Type, Any
