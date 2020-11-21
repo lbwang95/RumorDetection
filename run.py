@@ -32,7 +32,7 @@ def train_and_test(model, task):
     print("================================")
     nn.load_state_dict(torch.load(config['save_path']))
     y_pred = nn.predict(X_test_tid, X_test)
-    print(classification_report(y_test, y_pred, target_names=config['target_names'], digits=3))
+    #print(classification_report(y_test, y_pred, target_names=config['target_names'], digits=3))
 
 
 config = {

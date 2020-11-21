@@ -7,7 +7,7 @@ import scipy.sparse as sp
 import pickle
 import jieba
 jieba.set_dictionary('dict.txt.big')
-
+import sys
 
 w2v_dim = 300
 
