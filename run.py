@@ -54,7 +54,7 @@ if __name__ == '__main__':
     # task = 'weibo'
     print("task: ", task)
 
-    if task == 'weibo17':
+    if task == 'weibo17' or task == 'weibo':
         config['num_classes'] = 2
         config['target_names'] = ['NR', 'FR']
 

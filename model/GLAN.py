@@ -1,8 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.init as init
-from model.GAT import GAT
-from model.DrGAT import DrGAT
+from model.GAT import DrGAT,GAT,GAT_GCN,GAT_TKipfGCN
 from model.se_layer import SELayer
 from model.TransformerBlock import TransformerBlock
 from .NeuralNetwork import NeuralNetwork
