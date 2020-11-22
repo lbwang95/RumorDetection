@@ -32,6 +32,9 @@ def train_and_test(model, task):
     print("================================")
     nn.load_state_dict(torch.load(config['save_path']))
     y_pred = nn.predict(X_test_tid, X_test)
+    for i in range(len(y_pred)):
+        if y_pred[i]==1:
+            print(X_test_tid[i],X_test[i])
     #print(classification_report(y_test, y_pred, target_names=config['target_names'], digits=3))
 
 
