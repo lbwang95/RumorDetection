@@ -110,9 +110,15 @@ def read_corpus(root_path, file_name):
     relation = np.array([[X_id_dic[tup[0]], X_id_dic[tup[1]], tup[2]] for tup in relation])
     relation = build_symmetric_adjacency_matrix(relation, shape=(num_node, num_node))
 
+    fw=open("mapping.txt","w")
+    for tid in X_test_tid:
+        fw.write(str(tid)+":"+str(X_id_dic[tid])+"\n")
+    fw.close()
+
     X_train_tid = np.array([X_id_dic[tid] for tid in X_train_tid])
     X_dev_tid = np.array([X_id_dic[tid] for tid in X_dev_tid])
     X_test_tid = np.array([X_id_dic[tid] for tid in X_test_tid])
+
 
     return X_train_tid, X_train_content, y_train, \
            X_dev_tid, X_dev_content, y_dev, \
