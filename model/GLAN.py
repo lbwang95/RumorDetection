@@ -27,8 +27,8 @@ class GLAN(NeuralNetwork):
             self.relation_embedding = GAT(nfeat=300, uV=self.uV, adj=adj)
         elif gModule=='GAT_GCN':
             self.relation_embedding = GAT_GCN(nfeat=300, uV=self.uV, adj=adj)
-        elif gModule=='GAT_TKipfGCN':
-            self.relation_embedding = GAT_TKipfGCN(nfeat=300, uV=self.uV, adj=adj)
+        elif gModule=='EAGCN':
+            self.relation_embedding = GAT_GCN(nfeat=300, uV=self.uV, adj=adj,edge_aware=False)
         else:
             self.relation_embedding = GAT(nfeat=300, uV=self.uV, adj=adj)
 

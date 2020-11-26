@@ -389,7 +389,7 @@ class DrGAT(nn.Module):
 
 class GAT_GCN(nn.Module):
 
-    def __init__(self, nfeat, uV, adj, hidden=16, nb_heads=8, n_output=300, dropout=0.5, alpha=0.3):
+    def __init__(self, nfeat, uV, adj, hidden=16, nb_heads=8, n_output=300, dropout=0.5, alpha=0.3,edge_aware=False):
         """Sparse version of GAT."""
         super(GAT_GCN, self).__init__()
         self.dropout = nn.Dropout(dropout)
@@ -409,6 +409,7 @@ class GAT_GCN(nn.Module):
         self.out_att = GraphConvolution(in_features=hidden * nb_heads,
                                         out_features=n_output,
                                         bias=False)
+        self.edge_aware = edge_aware
 
     def forward(self, X_tid):
         # print('uV',self.uV)
@@ -421,7 +422,10 @@ class GAT_GCN(nn.Module):
         # X: [4458,300]
         X = self.dropout(X)
 
-        X = torch.cat([att(X, self.adj) for att in self.attentions], dim=1)
+        if self.edge_aware:
+            X = torch.cat([att(X, self.adj,self.adj.data) for att in self.attentions], dim=1)
+        else:
+            X = torch.cat([att(X, self.adj) for att in self.attentions], dim=1)
         X = self.dropout(X)
         # print('X after SpGraph', X.shape)
         # X: [4458, 128]
